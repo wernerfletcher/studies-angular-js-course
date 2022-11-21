@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('firstApp', [])
-        .controller('firstController', function () {
-
+        .controller('firstController', function ($scope) {
+            $scope.name = 'Werner';
         });
 })();
