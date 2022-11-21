@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html ng-app="firstApp">
+<html ng-app="nameCalculator">
     <head>
         <meta charset="UTF-8">
-        <title>Angular JS Course</title>
+        <title>Name Calculator</title>
 
         <script src="angular.min.js"></script>
         <script src="app.js"></script>
     </head>
     <body>
-        <div ng-controller="firstController">
-            <h1>Hello, {{name}}</h1>
-            <input type="text" ng-model="name"/>
+        <div ng-controller="nameCalculatorController">
+            <h1>Calculate the numerical value of your name!</h1>
+            <p>
+                Enter your name
+                <input type="text" 
+                    ng-model="name"
+                    ng-keyup="displayNumericValue()"/>
+            </p>
+            <p>
+                The numerical value of '{{name}}' is: {{numericNameValue}}
+            </p>
         </div>
     </body>
 </html>
