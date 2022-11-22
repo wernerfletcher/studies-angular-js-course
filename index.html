@@ -14,10 +14,13 @@
                 Enter your name
                 <input type="text" 
                     ng-model="name"
-                    ng-keyup="displayNumericValue()"/>
+                    ng-keyup="displayNumericValue(); displayUpperCaseName();"/>
             </p>
             <p>
                 The numerical value of '{{name}}' is: {{numericNameValue}}
+            </p>
+            <p>
+                The numerical value of '{{nameUpper}}' is: {{numericNameValueUpper}}
             </p>
         </div>
     </body>
