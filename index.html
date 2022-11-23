@@ -22,9 +22,12 @@
             <p>
                 The numerical value of '{{nameUpper}}' is: {{numericNameValueUpper}}
             </p>
-            <button ng-click="changeButtonState()">
+            <button ng-click="changeButtonState(); generateRandomPrice();">
                 <img ng-src="img/{{iconPrefix}}-button.png">
             </button>
+            <p>
+                Click the button to see your total cost: {{price | currency : 'E$' : 3}}
+            </p>
         </div>
     </body>
 </html>

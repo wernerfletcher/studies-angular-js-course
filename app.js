@@ -10,26 +10,34 @@
             $scope.nameUpper = '';
             $scope.numericNameValue = 0;
             $scope.numericNameValueUpper = 0;
-            $scope.buttonSelected = false;
-            $scope.iconPrefix = 'off';
             
             $scope.displayNumericValue = function () {
                 $scope.numericNameValue = calculateNumericValue($scope.name);
-            }
+            };
 
             $scope.displayUpperCaseName = function () {
-                var upper = $filter('uppercase');
-                $scope.nameUpper = upper($scope.name);
+                $scope.nameUpper = $filter('uppercase')($scope.name);
                 $scope.numericNameValueUpper = calculateNumericValue($scope.nameUpper);
-            }
+            };
 
+            $scope.buttonSelected = false;
+            $scope.iconPrefix = 'off';
             $scope.changeButtonState = function () {
                 $scope.buttonSelected = !$scope.buttonSelected;
-                $scope.iconPrefix = getIconPrefix($scope.buttonSelected);
-            }
+                $scope.iconPrefix = setIconPrefix($scope.buttonSelected);
+            };
+
+            $scope.price = 0;
+            $scope.generateRandomPrice = function () {
+                if ($scope.iconPrefix == 'off') {
+                    $scope.price = 0;
+                } else {
+                    $scope.price = Math.random()*1000;
+                }
+            };
         }
 
-        function getIconPrefix(buttonSelected) {
+        function setIconPrefix(buttonSelected) {
             return buttonSelected ? 'on' : 'off';
         }
 
