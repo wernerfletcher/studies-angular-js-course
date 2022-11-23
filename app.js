@@ -2,9 +2,10 @@
     'use strict';
 
     angular.module('nameCalculator', [])
-        .controller('nameCalculatorController', calculatorController);
+        .controller('nameCalculatorController', calculatorController)
+        .filter('leet', LeetFilterFactory);
 
-        calculatorController.$inject = ['$scope', '$filter'];
+        calculatorController.$inject = ['$scope', '$filter', 'leetFilter'];
         function calculatorController($scope, $filter) {
             $scope.name = '';
             $scope.nameUpper = '';
@@ -32,9 +33,17 @@
                 if ($scope.iconPrefix == 'off') {
                     $scope.price = 0;
                 } else {
-                    $scope.price = Math.random()*1000;
+                    $scope.price = Math.random() * 1000;
                 }
             };
+        }
+
+        function LeetFilterFactory() {
+            let output = '';
+            return function (input, target, replacement) {
+                output = input.replaceAll(target, replacement);
+                return output;
+            }
         }
 
         function setIconPrefix(buttonSelected) {
