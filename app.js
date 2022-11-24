@@ -1,19 +1,19 @@
 (function () {
     'use strict';
 
-    let petList = ["Dogs", "Cats", "Birds", "Fish"];
+    let petList = ['Dogs', 'Cats', 'Birds', 'Fish', 'Wild dogs', 'Bobcats'];
     let dogList = [
         {
-            name: "Sasha",
-            breed: "Husky"
+            name: 'Sasha',
+            breed: 'Husky'
         },
         {
-            name: "Poochie",
-            breed: "Poodle"
+            name: 'Poochie',
+            breed: 'Poodle'
         },
         {
-            name: "Wollie",
-            breed: "Pomeranian"
+            name: 'Wollie',
+            breed: 'Pomeranian'
         }
     ];
 

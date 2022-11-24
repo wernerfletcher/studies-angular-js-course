@@ -36,8 +36,10 @@
             <br>
             <div>
                 Types of pets:
+                <br>
+                <input type="text" ng-model="petSearchString" placeholder="Search" />
                 <ul>
-                    <li ng-repeat="pet in petList">{{pet}}</li>
+                    <li ng-repeat="pet in petList | filter : petSearchString">{{pet}}</li>
                 </ul>
             </div>
             <div>
