@@ -32,6 +32,22 @@
                 Your leet name: {{name | leet : 'e' : '3' | uppercase}}
             </p>
             <button ng-click="showSurprisePopup()">Click for a surprise</button>
+            <br>
+            <br>
+            <div>
+                Types of pets:
+                <ul>
+                    <li ng-repeat="pet in petList">{{pet}}</li>
+                </ul>
+            </div>
+            <div>
+                List of pets (names and breeds):
+                <br>
+                <input type="text" ng-model="dogList[0].name" />
+                <ul>
+                    <li ng-repeat="dog in dogList">{{$index+1 +'. '+ dog.name +' is a '+ dog.breed}}</li>
+                </ul>
+            </div>
         </div>
     </body>
 </html>
