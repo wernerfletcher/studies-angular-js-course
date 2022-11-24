@@ -5,8 +5,8 @@
         .controller('nameCalculatorController', calculatorController)
         .filter('leet', LeetFilterFactory);
 
-        calculatorController.$inject = ['$scope', '$filter', 'leetFilter'];
-        function calculatorController($scope, $filter) {
+        calculatorController.$inject = ['$scope', '$filter', 'leetFilter', '$timeout'];
+        function calculatorController($scope, $filter, $timeout) {
             $scope.name = '';
             $scope.nameUpper = '';
             $scope.numericNameValue = 0;
@@ -35,6 +35,12 @@
                 } else {
                     $scope.price = Math.random() * 1000;
                 }
+            };
+
+            $scope.showSurprisePopup = function () {
+                $timeout(function () {
+                    alert('Surprise!!');
+                }, 2000);
             };
         }
 
