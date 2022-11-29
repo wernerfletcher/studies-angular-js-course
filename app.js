@@ -21,7 +21,8 @@
         .controller('nameCalculatorController', calculatorController)
         .controller('todoListController', todoListController)
         .filter('leet', LeetFilterFactory)
-        .service('TodoService', TodoService);
+        // .service('TodoService', TodoService)
+        .factory('TodoServiceFactory', TodoServiceFactory);
 
     calculatorController.$inject = ['$scope', '$filter', '$timeout', 'leetFilter'];
     function calculatorController($scope, $filter, $timeout) {
@@ -85,31 +86,43 @@
         }
     };
 
-    todoListController.$inject = ['TodoService'];
-    function todoListController(TodoService) {
+    todoListController.$inject = ['TodoServiceFactory'];
+    function todoListController(TodoServiceFactory) {
+        // let todoService = TodoServiceFactory();
+        let todoService = TodoServiceFactory(3);
         let todoCtrl = this;
 
         todoCtrl.itemName = "";
         todoCtrl.itemQuantity = "";
-        todoCtrl.items = TodoService.getItems();
+        todoCtrl.items = todoService.getItems();
+        todoCtrl.errorMessage = "";
 
         todoCtrl.addItem = function () {
-            TodoService.addItem(todoCtrl.itemName, todoCtrl.itemQuantity);
-            todoCtrl.itemName = "";
-            todoCtrl.itemQuantity = "";
+            try {
+                todoService.addItem(todoCtrl.itemName, todoCtrl.itemQuantity);
+                todoCtrl.itemName = "";
+                todoCtrl.itemQuantity = "";
+            } catch (error) {
+                todoCtrl.errorMessage = error.message;
+            }
         };
 
         todoCtrl.removeItem = function (index) {
-            TodoService.removeItem(index);
+            todoService.removeItem(index);
+            todoCtrl.errorMessage = "";
         };
     };
 
-    function TodoService() {
+    function TodoService(maxItems) {
         let service = this;
         let todoItems = [];
 
         service.addItem = function (name, quantity) {
-            todoItems.push({ 'name': name, 'quantity': quantity });
+            if (!maxItems || (maxItems && todoItems.length < maxItems)) {
+                todoItems.push({ 'name': name, 'quantity': quantity });
+            } else {
+                throw new Error(`Max item limit of ${maxItems} reached!`);
+            }
         };
 
         service.getItems = function () {
@@ -119,5 +132,12 @@
         service.removeItem = function (index) {
             todoItems.splice(index, 1);
         };
+    };
+
+    function TodoServiceFactory() {
+        let factory = function (maxItems) {
+            return new TodoService(maxItems);
+        };
+        return factory;
     };
 })();
