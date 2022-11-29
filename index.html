@@ -51,5 +51,19 @@
                 </ul>
             </div>
         </div>
+
+        <div ng-controller="todoListController as todoCtrl">
+            <h3>Shopping list:</h3>
+            <input type="text" ng-model="todoCtrl.itemQuantity" placeholder="Quantity"/>
+            <input type="text" ng-model="todoCtrl.itemName" placeholder="Item to get"/>
+            <button ng-click="todoCtrl.addItem(todoCtrl.itemName, todoCtrl.itemQuantity);">Add Item</button>
+            <br>
+            <ol>
+                <li ng-repeat="item in todoCtrl.items">
+                    {{ 'Get '+ item.quantity + ' ' + item.name }}
+                    <button ng-click="todoCtrl.removeItem($index)">Remove</button>
+                </li>
+            </ol>
+        </div>
     </body>
 </html>
