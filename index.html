@@ -64,7 +64,9 @@
                     <button ng-click="todoCtrl.removeItem($index)">Remove</button>
                 </li>
             </ol>
-            <h3 ng-model="todoCtrl.errorMessage" style="color: red;">{{ todoCtrl.errorMessage }}</h3>
+            <h3 ng-if="todoCtrl.errorMessage" ng-model="todoCtrl.errorMessage" style="color: red;">{{ todoCtrl.errorMessage }}</h3>
+            <!-- <h3 ng-show="todoCtrl.errorMessage" ng-model="todoCtrl.errorMessage" style="color: red;">{{ todoCtrl.errorMessage }}</h3> -->
+            <!-- <h3 ng-hide="!todoCtrl.errorMessage" ng-model="todoCtrl.errorMessage" style="color: red;">{{ todoCtrl.errorMessage }}</h3> -->
         </div>
     </body>
 </html>
