@@ -22,7 +22,14 @@
         .controller('todoListController', todoListController)
         .filter('leet', LeetFilterFactory)
         // .service('TodoService', TodoService)
-        .factory('TodoServiceFactory', TodoServiceFactory);
+        // .factory('TodoServiceFactory', TodoServiceFactory)
+        .provider('TodoService', TodoServiceProvider)
+        .config(TodoConfig);
+
+    TodoConfig.$inject = ['TodoServiceProvider'];
+    function TodoConfig(TodoServiceProvider) {
+        TodoServiceProvider.config.maxItems = 3;
+    }
 
     calculatorController.$inject = ['$scope', '$filter', '$timeout', 'leetFilter'];
     function calculatorController($scope, $filter, $timeout) {
@@ -86,20 +93,20 @@
         }
     };
 
-    todoListController.$inject = ['TodoServiceFactory'];
-    function todoListController(TodoServiceFactory) {
+    todoListController.$inject = ['TodoService'];
+    function todoListController(TodoService) {
         // let todoService = TodoServiceFactory();
-        let todoService = TodoServiceFactory(3);
+        // let todoService = TodoServiceFactory(3);
         let todoCtrl = this;
 
         todoCtrl.itemName = "";
         todoCtrl.itemQuantity = "";
-        todoCtrl.items = todoService.getItems();
+        todoCtrl.items = TodoService.getItems();
         todoCtrl.errorMessage = "";
 
         todoCtrl.addItem = function () {
             try {
-                todoService.addItem(todoCtrl.itemName, todoCtrl.itemQuantity);
+                TodoService.addItem(todoCtrl.itemName, todoCtrl.itemQuantity);
                 todoCtrl.itemName = "";
                 todoCtrl.itemQuantity = "";
             } catch (error) {
@@ -108,7 +115,7 @@
         };
 
         todoCtrl.removeItem = function (index) {
-            todoService.removeItem(index);
+            TodoService.removeItem(index);
             todoCtrl.errorMessage = "";
         };
     };
@@ -139,5 +146,17 @@
             return new TodoService(maxItems);
         };
         return factory;
+    };
+
+    function TodoServiceProvider() {
+        let provider = this;
+
+        provider.config = {
+            maxItems: 5
+        };
+
+        provider.$get = function () {
+            return new TodoService(provider.config.maxItems);
+        };
     };
 })();
