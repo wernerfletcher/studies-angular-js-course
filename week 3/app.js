@@ -1,33 +1,33 @@
 (function () {
     'use strict';
 
-    angular.module('shoppingList', [])
+    angular.module('shoppingListApp', [])
         .controller('ShoppingListController', ShoppingListController)
         .service('ShoppingListService', ShoppingListService)
-        .service('ShoppingListVerificationService', ShoppingListVerificationService)
-        .directive('listItem', ListItem);
+        .service('ShoppingListFilterService', ShoppingListFilterService)
+        .directive('itemList', ItemList);
 
-    function ListItem() {
+    function ItemList() {
         let ddo = {
-            templateUrl: 'listItem.html',
-            restrict: 'E',
+            templateUrl: 'itemList.html',
+            restrict: 'E',//restricted to element.  'A' for attribute
             scope: {
-                someTitle: '=title',
-                items: '<',
+                listTitle: '@title',
+                items: '<'
             },
-            controller: DirectiveController,
-            controllerAs: 'cont',
+            controller: ItemListController,
+            controllerAs: 'ctrl',
             bindToController: true,
         };
         return ddo;
     }
 
-    function DirectiveController() {
-        let dir = this;
+    function ItemListController() {
+        let ctrl = this;
 
-        dir.checkItem = function () {
-            for (let i = 0; i < dir.items.length; i++) {
-                if (dir.items[i].name.indexOf('chips') !== -1) {
+        ctrl.checkItem = function () {
+            for (let i = 0; i < ctrl.items.length; i++) {
+                if (ctrl.items[i].name.toLowerCase().indexOf('chips') !== -1) {
                     return true;
                 }
             }
@@ -37,45 +37,47 @@
 
     ShoppingListController.$inject = ['ShoppingListService'];
     function ShoppingListController(ShoppingListService) {
-        let shopCtrl = this;
+        let shoppingList = this;
 
-        shopCtrl.items = ShoppingListService.getItems();
-        shopCtrl.itemName = '';
-        shopCtrl.itemQuantity = '';
-        shopCtrl.errorMessage = '';
-        shopCtrl.title = 'Shopping List';
+        shoppingList.items = ShoppingListService.getItems();
+        shoppingList.itemName = '';
+        shoppingList.itemQuantity = '';
+        shoppingList.errorMessage = '';
+        shoppingList.title = 'Shopping List:';
 
-        shopCtrl.addItem = function () {
-            ShoppingListService.addItem(shopCtrl.itemName, shopCtrl.itemQuantity);
+        shoppingList.addItem = function () {
+            try {
+                ShoppingListService.addItem(shoppingList.itemName, shoppingList.itemQuantity);
+            } catch (error) {
+                shoppingList.errorMessage = error;
+            }
         };
 
-        shopCtrl.removeItem = function (index) {
+        shoppingList.removeItem = function (index) {
             ShoppingListService.removeItem(index);
         };
     };
 
-    ShoppingListService.$inject = ['$q', 'ShoppingListVerificationService'];
-    function ShoppingListService($q, ShoppingListVerificationService) {
+    ShoppingListService.$inject = ['ShoppingListFilterService'];
+    function ShoppingListService(ShoppingListFilterService) {
         let service = this;
 
         let items = [];
 
         service.addItem = function (itemName, itemQuantity) {
-            $q.all([
-                ShoppingListVerificationService.checkItemName(itemName),
-                ShoppingListVerificationService.checkItemQuantity(itemQuantity)
-            ])
-                .then(function (res) {
-                    let newItem = {
-                        name: itemName,
-                        quantity: itemQuantity
-                    };
+            let nameResult = ShoppingListFilterService.checkItemName(itemName);
+            if (nameResult.message.length > 0) {
+                console.error(nameResult.message);
+                //throw new Error(nameResult.message);
+            }
 
-                    items.push(newItem);
-                })
-                .catch(function (err) {
-                    console.error(err);
-                });
+            let quantityResult = ShoppingListFilterService.checkItemQuantity(itemQuantity);
+            if (quantityResult.message.length > 0) {
+                console.error(quantityResult.message);
+                //throw new Error(quantityResult.message);
+            }
+
+            items.push({name: itemName, quantity: itemQuantity});
         };
 
         service.removeItem = function (index) {
@@ -87,44 +89,30 @@
         };
     };
 
-    ShoppingListVerificationService.$inject = ['$q', '$timeout'];
-    function ShoppingListVerificationService($q, $timeout) {
+    ShoppingListFilterService.$inject = [];
+    function ShoppingListFilterService() {
         let service = this;
 
         service.checkItemName = function (name) {
-            let deferred = $q.defer();
             let result = {
                 message: ''
             };
 
-            $timeout(function () {
-                if (name.toLowerCase().indexOf('chips') === -1) {
-                    deferred.resolve(result);
-                } else {
-                    result.message = 'Not allowed to order that item!'
-                    deferred.reject(result);
-                }
-            }, 3000);
-
-            return deferred.promise;
+            if (name.toLowerCase().indexOf('chips') !== -1) {
+                result.message = 'Not allowed to order that item!';
+            }
+            return result;
         };
 
         service.checkItemQuantity = function (quantity) {
-            let deferred = $q.defer();
             let result = {
                 message: ''
             };
 
-            $timeout(function () {
-                if (quantity < 5) {
-                    deferred.resolve(result);
-                } else {
-                    result.message = 'Not allowed to order that many items!';
-                    deferred.reject(result);
-                }
-            }, 1000);
-
-            return deferred.promise;
+            if (quantity > 5) {
+                result.message = 'Not allowed to order that many items!';
+            }
+            return result;
         };
     };
 })();

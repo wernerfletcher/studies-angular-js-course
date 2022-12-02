@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="shoppingList">
+<html ng-app="shoppingListApp">
     <head>
         <meta charset="UTF-8">
         <title>Week 3</title>
@@ -8,13 +8,13 @@
         <script src="app.js"></script>
     </head>
     <body>
-        <div ng-controller="ShoppingListController as shopCtrl">
+        <div ng-controller="ShoppingListController as shoppingList">
             <h3>Item list:</h3>
-            <input type="text" ng-model="shopCtrl.itemQuantity" placeholder="Quantity"/>
-            <input type="text" ng-model="shopCtrl.itemName" placeholder="Item to get"/>
-            <button ng-click="shopCtrl.addItem(shopCtrl.itemName, shopCtrl.itemQuantity);">Add Item</button>
+            <input type="text" ng-model="shoppingList.itemQuantity" placeholder="Quantity"/>
+            <input type="text" ng-model="shoppingList.itemName" placeholder="Item to get"/>
+            <button ng-click="shoppingList.addItem(shoppingList.itemName, shoppingList.itemQuantity);">Add Item</button>
             <br>
-            <list-item items="shopCtrl.items" title="shopCtrl.title"></list-item>
+            <item-list items="shoppingList.items" title="{{shoppingList.title}}"></item-list>
         </div>
     </body>
 </html>
