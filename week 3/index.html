@@ -15,10 +15,7 @@
             <button ng-click="shopCtrl.addItem(shopCtrl.itemName, shopCtrl.itemQuantity);">Add Item</button>
             <br>
             <ol>
-                <li ng-repeat="item in shopCtrl.items">
-                    {{ 'Get '+ item.quantity + ' ' + item.name }}
-                    <button ng-click="shopCtrl.removeItem($index)">Remove</button>
-                </li>
+                <list-item ng-repeat="item in shopCtrl.items"></list-item>
             </ol>
             <h3 ng-if="shopCtrl.errorMessage" ng-model="shopCtrl.errorMessage" style="color: red;">{{ shopCtrl.errorMessage }}</h3>
         </div>

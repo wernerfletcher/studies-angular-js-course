@@ -4,7 +4,15 @@
     angular.module('shoppingList', [])
         .controller('ShoppingListController', ShoppingListController)
         .service('ShoppingListService', ShoppingListService)
-        .service('ShoppingListVerificationService', ShoppingListVerificationService);
+        .service('ShoppingListVerificationService', ShoppingListVerificationService)
+        .directive('listItem', ListItem);
+
+    function ListItem() {
+        let ddo = {
+            templateUrl: 'listItem.html'
+        };
+        return ddo;
+    }
 
     ShoppingListController.$inject = ['ShoppingListService'];
     function ShoppingListController(ShoppingListService) {
