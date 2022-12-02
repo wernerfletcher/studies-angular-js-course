@@ -1,7 +1,8 @@
 <ol>
     <h3>{{ someTitle }}</h3>
-    <li ng-repeat="item in controller.items">
+    <li ng-repeat="item in cont.items">
         {{ 'Get '+ item.quantity + ' ' + item.name }}
-        <button ng-click="controller.removeItem($index)">Remove</button>
+        <!-- <button ng-click="ctrl.removeItem($index)">Remove</button> -->
     </li>
 </ol>
+<h3 ng-if="cont.checkItem()" style="color: red;">ERROR!</h3>

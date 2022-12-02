@@ -13,10 +13,26 @@
             restrict: 'E',
             scope: {
                 someTitle: '=title',
-                controller: '=shopCtrl',
-            }
+                items: '<',
+            },
+            controller: DirectiveController,
+            controllerAs: 'cont',
+            bindToController: true,
         };
         return ddo;
+    }
+
+    function DirectiveController() {
+        let dir = this;
+
+        dir.checkItem = function () {
+            for (let i = 0; i < dir.items.length; i++) {
+                if (dir.items[i].name.indexOf('chips') !== -1) {
+                    return true;
+                }
+            }
+            return false;
+        };
     }
 
     ShoppingListController.$inject = ['ShoppingListService'];
