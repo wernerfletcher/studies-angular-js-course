@@ -10,7 +10,11 @@
     function ListItem() {
         let ddo = {
             templateUrl: 'listItem.html',
-            restrict: 'E'
+            restrict: 'E',
+            scope: {
+                someTitle: '=title',
+                controller: '=shopCtrl',
+            }
         };
         return ddo;
     }
@@ -23,6 +27,7 @@
         shopCtrl.itemName = '';
         shopCtrl.itemQuantity = '';
         shopCtrl.errorMessage = '';
+        shopCtrl.title = 'Shopping List';
 
         shopCtrl.addItem = function () {
             ShoppingListService.addItem(shopCtrl.itemName, shopCtrl.itemQuantity);

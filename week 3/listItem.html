@@ -1,4 +1,7 @@
-<li>
-    {{ 'Get '+ item.quantity + ' ' + item.name }}
-    <button ng-click="shopCtrl.removeItem($index)">Remove</button>
-</li>
+<ol>
+    <h3>{{ someTitle }}</h3>
+    <li ng-repeat="item in controller.items">
+        {{ 'Get '+ item.quantity + ' ' + item.name }}
+        <button ng-click="controller.removeItem($index)">Remove</button>
+    </li>
+</ol>
