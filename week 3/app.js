@@ -9,7 +9,8 @@
 
     function ListItem() {
         let ddo = {
-            templateUrl: 'listItem.html'
+            templateUrl: 'listItem.html',
+            restrict: 'E'
         };
         return ddo;
     }
