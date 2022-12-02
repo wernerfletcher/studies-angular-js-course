@@ -37,8 +37,8 @@
             ])
                 .then(function (res) {
                     let newItem = {
-                        'name': itemName,
-                        'quantity': itemQuantity
+                        name: itemName,
+                        quantity: itemQuantity
                     };
 
                     items.push(newItem);
@@ -64,7 +64,7 @@
         service.checkItemName = function (name) {
             let deferred = $q.defer();
             let result = {
-                'message': ''
+                message: ''
             };
 
             $timeout(function () {
@@ -82,7 +82,7 @@
         service.checkItemQuantity = function (quantity) {
             let deferred = $q.defer();
             let result = {
-                'message': ''
+                message: ''
             };
 
             $timeout(function () {
