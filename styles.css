@@ -1,0 +1,12 @@
+.error {
+    color: red;
+    display: none;
+}
+
+#itemList1, #itemList2 {
+    float: left;
+}
+
+#itemList2 {
+    margin-left: 40px;
+}

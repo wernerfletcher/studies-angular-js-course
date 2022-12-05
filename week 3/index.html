@@ -4,8 +4,11 @@
         <meta charset="UTF-8">
         <title>Week 3</title>
 
+        <script src="../jquery-3.6.1.min.js"></script>
         <script src="../angular.min.js"></script>
         <script src="app.js"></script>
+
+        <link rel="stylesheet" href="../styles.css">
     </head>
     <body>
         <div ng-controller="ShoppingListController as shoppingList">
@@ -14,7 +17,16 @@
             <input type="text" ng-model="shoppingList.itemName" placeholder="Item to get"/>
             <button ng-click="shoppingList.addItem(shoppingList.itemName, shoppingList.itemQuantity);">Add Item</button>
             <br>
-            <item-list items="shoppingList.items" title="{{shoppingList.title}}" remove-item="shoppingList.removeItem(index);"></item-list>
+            <item-list id="itemList1" items="shoppingList.items" title="{{shoppingList.title}}" remove-item="shoppingList.removeItem(index);">
+                <span>{{shoppingList.errorMessage}}</span>
+            </item-list>
+
+            <item-list id="itemList2" items="shoppingList.items" title="{{shoppingList.title}}" remove-item="shoppingList.removeItem(index);">
+                <div>
+                    An error occurred:
+                    <div>{{shoppingList.errorMessage}}</div>
+                </div>
+            </item-list>
         </div>
     </body>
 </html>

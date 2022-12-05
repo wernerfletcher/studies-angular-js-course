@@ -18,9 +18,21 @@
             },
             controller: ItemListController,
             controllerAs: 'ctrl',
-            bindToController: true
+            bindToController: true,
+            link: ItemListDirectiveLink,
+            transclude: true
         };
         return ddo;
+
+        function ItemListDirectiveLink(scope, element, attrs) {
+            scope.$watch('ctrl.checkItem()', function (newVal, oldVal) {
+                if (newVal === true) {
+                    element.find('div.error').fadeIn(1000);
+                } else {
+                    element.find('div.error').fadeOut(1000);
+                }
+            });
+        }
     }
 
     function ItemListController() {
@@ -50,7 +62,8 @@
             try {
                 ShoppingListService.addItem(shoppingList.itemName, shoppingList.itemQuantity);
             } catch (error) {
-                shoppingList.errorMessage = error;
+                console.error(error);
+                shoppingList.errorMessage = error.message;
             }
         };
 
@@ -66,19 +79,17 @@
         let items = [];
 
         service.addItem = function (itemName, itemQuantity) {
+            items.push({name: itemName, quantity: itemQuantity});
+            
             let nameResult = ShoppingListFilterService.checkItemName(itemName);
             if (nameResult.message.length > 0) {
-                console.error(nameResult.message);
-                //throw new Error(nameResult.message);
+                throw new Error(nameResult.message);
             }
 
             let quantityResult = ShoppingListFilterService.checkItemQuantity(itemQuantity);
             if (quantityResult.message.length > 0) {
-                console.error(quantityResult.message);
-                //throw new Error(quantityResult.message);
+                throw new Error(quantityResult.message);
             }
-
-            items.push({name: itemName, quantity: itemQuantity});
         };
 
         service.removeItem = function (index) {

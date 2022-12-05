@@ -4,5 +4,5 @@
         {{ 'Get '+ item.quantity + ' of ' + item.name }}
         <button ng-click="ctrl.removeItem({index: $index})">Remove</button>
     </li>
-    <h3 ng-if="ctrl.checkItem()" style="color: red;">Chips detected!</h3>
+    <div class="error" ng-transclude></div>
 </ol>
