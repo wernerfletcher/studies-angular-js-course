@@ -2,7 +2,7 @@
     <h3>{{ ctrl.listTitle }}</h3>
     <li ng-repeat="item in ctrl.items">
         {{ 'Get '+ item.quantity + ' of ' + item.name }}
-        <!-- <button ng-click="ctrl.removeItem($index)">Remove</button> -->
+        <button ng-click="ctrl.removeItem({index: $index})">Remove</button>
     </li>
     <h3 ng-if="ctrl.checkItem()" style="color: red;">Chips detected!</h3>
 </ol>

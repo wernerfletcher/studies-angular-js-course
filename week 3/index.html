@@ -14,7 +14,7 @@
             <input type="text" ng-model="shoppingList.itemName" placeholder="Item to get"/>
             <button ng-click="shoppingList.addItem(shoppingList.itemName, shoppingList.itemQuantity);">Add Item</button>
             <br>
-            <item-list items="shoppingList.items" title="{{shoppingList.title}}"></item-list>
+            <item-list items="shoppingList.items" title="{{shoppingList.title}}" remove-item="shoppingList.removeItem(index);"></item-list>
         </div>
     </body>
 </html>

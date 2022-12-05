@@ -13,11 +13,12 @@
             restrict: 'E',//restricted to element.  'A' for attribute
             scope: {
                 listTitle: '@title',
-                items: '<'
+                items: '<',
+                removeItem: '&'
             },
             controller: ItemListController,
             controllerAs: 'ctrl',
-            bindToController: true,
+            bindToController: true
         };
         return ddo;
     }
