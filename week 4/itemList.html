@@ -1,0 +1,8 @@
+<ol>
+    <h3>{{ $ctrl.listTitle }}</h3>
+    <li ng-repeat="item in $ctrl.items">
+        {{ 'Get '+ item.quantity + ' of ' + item.name }}
+        <button ng-click="$ctrl.remove($index)">Remove</button>
+    </li>
+    <h3 class="error">Chips detected!</h3>
+</ol>

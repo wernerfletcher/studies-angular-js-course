@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html ng-app="shoppingListApp">
+    <head>
+        <meta charset="UTF-8">
+        <title>Week 4</title>
+
+        <script src="../jquery-3.6.1.min.js"></script>
+        <script src="../angular.min.js"></script>
+        <script src="app.js"></script>
+
+        <link rel="stylesheet" href="../styles.css">
+    </head>
+    <body>
+        <div ng-controller="ShoppingListController as shoppingList">
+            <h3>Item list:</h3>
+            <input type="text" ng-model="shoppingList.itemQuantity" placeholder="Quantity"/>
+            <input type="text" ng-model="shoppingList.itemName" placeholder="Item to get"/>
+            <button ng-click="shoppingList.addItem(shoppingList.itemName, shoppingList.itemQuantity);">Add Item</button>
+            <br>
+            <item-list items="shoppingList.items" title="{{shoppingList.title}}" remove-item="shoppingList.removeItem(index);"></item-list>
+        </div>
+    </body>
+</html>
