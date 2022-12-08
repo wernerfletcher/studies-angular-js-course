@@ -13,7 +13,29 @@
                 items: '<',
                 removeItem: '&'
             }
+        })
+        .component('spinner', {
+            templateUrl: 'spinner.html',
+            controller: SpinnerComponentController,
+            bindings: {
+
+            }
         });
+
+    SpinnerComponentController.$inject = ['$rootScope'];
+    function SpinnerComponentController($rootScope) {
+        let $ctrl = this;
+
+        $ctrl.showSpinner = false;
+
+        let cancelListener = $rootScope.$on('shoppinglist:togglespinner', function (event, data) {
+            $ctrl.showSpinner = data.show;
+        });
+
+        $ctrl.$onDestroy = function () {
+            cancelListener();
+        };
+    }
 
     ItemListComponentController.$inject = ['$element'];
     function ItemListComponentController($element) {
@@ -29,14 +51,14 @@
         };
 
         $ctrl.remove = function (idx) {
-            $ctrl.removeItem({index: idx});
+            $ctrl.removeItem({ index: idx });
         };
 
-        $ctrl.$onInit = function () {
-        };
-        
-        $ctrl.$onChanges = function () {
-        };
+        // $ctrl.$onInit = function () {
+        // };
+
+        // $ctrl.$onChanges = function () {
+        // };
 
         $ctrl.$doCheck = function () {
             if ($ctrl.checkItem() === true) {
@@ -58,11 +80,7 @@
         shoppingList.title = 'Shopping List:';
 
         shoppingList.addItem = function () {
-            try {
-                ShoppingListService.addItem(shoppingList.itemName, shoppingList.itemQuantity);
-            } catch (error) {
-                shoppingList.errorMessage = error;
-            }
+            ShoppingListService.addItem(shoppingList.itemName, shoppingList.itemQuantity);
         };
 
         shoppingList.removeItem = function (index) {
@@ -70,24 +88,27 @@
         };
     };
 
-    ShoppingListService.$inject = ['ShoppingListFilterService'];
-    function ShoppingListService(ShoppingListFilterService) {
+    ShoppingListService.$inject = ['ShoppingListFilterService', '$q', '$rootScope'];
+    function ShoppingListService(ShoppingListFilterService, $q, $rootScope) {
         let service = this;
 
         let items = [];
 
         service.addItem = function (itemName, itemQuantity) {
-            let nameResult = ShoppingListFilterService.checkItemName(itemName);
-            if (nameResult.message.length > 0) {
-                console.error(nameResult.message);
-            }
+            $rootScope.$broadcast('shoppinglist:togglespinner', { show: true });
 
-            let quantityResult = ShoppingListFilterService.checkItemQuantity(itemQuantity);
-            if (quantityResult.message.length > 0) {
-                console.error(quantityResult.message);
-            }
+            items.push({ name: itemName, quantity: itemQuantity });
 
-            items.push({name: itemName, quantity: itemQuantity});
+            $q.all([
+                ShoppingListFilterService.checkItemName(itemName),
+                ShoppingListFilterService.checkItemQuantity(itemQuantity)
+            ])
+                .catch(function (error) {
+                    console.error(error.message);
+                })
+                .finally(function () {
+                    $rootScope.$broadcast('shoppinglist:togglespinner', { show: false });
+                });
         };
 
         service.removeItem = function (index) {
@@ -99,30 +120,46 @@
         };
     };
 
-    ShoppingListFilterService.$inject = [];
-    function ShoppingListFilterService() {
+    ShoppingListFilterService.$inject = ['$q', '$timeout'];
+    function ShoppingListFilterService($q, $timeout) {
         let service = this;
 
         service.checkItemName = function (name) {
+            let deferred = $q.defer();
+
             let result = {
                 message: ''
             };
 
-            if (name.toLowerCase().indexOf('chips') !== -1) {
-                result.message = 'Not allowed to order that item!';
-            }
-            return result;
+            $timeout(function () {
+                if (name.toLowerCase().indexOf('chips') !== -1) {
+                    result.message = 'Not allowed to order that item!';
+                    deferred.reject(result);
+                } else {
+                    deferred.resolve(result);
+                }
+            }, 3000);
+
+            return deferred.promise;
         };
 
         service.checkItemQuantity = function (quantity) {
+            let deferred = $q.defer();
+
             let result = {
                 message: ''
             };
 
-            if (quantity > 5) {
-                result.message = 'Not allowed to order that many items!';
-            }
-            return result;
+            $timeout(function () {
+                if (quantity > 5) {
+                    result.message = 'Not allowed to order that many items!';
+                    deferred.reject(result);
+                } else {
+                    deferred.resolve(result);
+                }
+            }, 2000);
+
+            return deferred.promise;
         };
     };
 })();
