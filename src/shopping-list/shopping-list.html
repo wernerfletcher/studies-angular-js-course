@@ -1,0 +1,8 @@
+<div>
+    <ol>
+        <li ng-repeat="item in $ctrl.items">{{item.quantity}} of {{item.name}} 
+            <button ng-click="$ctrl.remove($index)">X</button>
+        </li>
+    </ol>
+    <div class="error">Chips detected!!</div>
+</div>

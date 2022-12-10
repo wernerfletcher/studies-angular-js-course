@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="ShoppingListApp">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shopping List App</title>
+
+        <link rel="stylesheet" href="css/styles.css">
+    </head>
+
+    <body>
+        <div>
+            <h2>Add items to the shopping list</h2>
+            <div ng-controller="ShoppingListController as list">
+                <input type="text" ng-model="list.itemName" placeholder="Item name">
+                <input type="text" ng-model="list.itemQuantity" placeholder="Quantity">
+                <button ng-click="list.addItem(list.itemName, list.itemQuantity);">Add item</button>
+
+                <shopping-list items="list.items" remove-item="list.removeItem(index);"></shopping-list>
+                <spinner></spinner>
+            </div>
+        </div>
+
+        <script src="lib/jquery-3.6.1.min.js"></script>
+        <script src="lib/angular.min.js"></script>
+
+        <script src="src/shopping-list/shopping-list-module.js"></script>
+        <script src="src/spinner/spinner.module.js"></script>
+
+        <script src="src/shopping-list/shopping-list-component.js"></script>
+        <script src="src/shopping-list/shopping-list-controller.js"></script>
+        <script src="src/shopping-list/shopping-list-factory.js"></script>
+        <script src="src/shopping-list/shopping-list-filter.service.js"></script>
+
+        <script src="src/spinner/spinner.component.js"></script>
+    </body>
+</html>

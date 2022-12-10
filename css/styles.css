@@ -1,5 +1,7 @@
 .error {
     color: red;
+    font-size: 16px;
+    font-weight: 600;
     display: none;
 }
 
@@ -9,4 +11,9 @@
 
 #itemList2 {
     margin-left: 40px;
+}
+
+img {
+    width: 20px;
+    height: 20px;
 }
