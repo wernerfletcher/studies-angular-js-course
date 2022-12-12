@@ -14,10 +14,10 @@
     function ShoppingListService($q, $timeout) {
         let service = this;
 
-        let items = [{ name: 'dummy item', quantity: '-1' }];
+        let items = [{ name: 'dummy item', quantity: '3 bags', description: 'this is a dummy item' }];
 
         service.add = function (name, quantity) {
-            items.push({ name: name, quantity: quantity });
+            items.push({ name: name, quantity: quantity, description: 'Some description of '+name });
         };
 
         service.remove = function (idx) {

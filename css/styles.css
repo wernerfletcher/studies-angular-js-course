@@ -13,6 +13,11 @@
     margin-left: 40px;
 }
 
+.list-item:hover {
+    cursor: pointer;
+    color: dodgerblue;
+}
+
 .spinner {
     width: 20px;
     height: 20px;
