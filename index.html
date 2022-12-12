@@ -10,18 +10,16 @@
     <body>
         <div>
             <h2>Add items to the shopping list</h2>
-            <div ng-controller="ShoppingListController as list">
-                <input type="text" ng-model="list.itemName" placeholder="Item name">
-                <input type="text" ng-model="list.itemQuantity" placeholder="Quantity">
-                <button ng-click="list.addItem(list.itemName, list.itemQuantity);">Add item</button>
-
-                <shopping-list items="list.items" remove-item="list.removeItem(index);"></shopping-list>
-                <spinner></spinner>
+            <div class="tabs">
+                <a class="tab" ui-sref="tab1" ui-sref-active="active-tab">Tab 1</a>
+                <a class="tab" ui-sref="tab2" ui-sref-active="active-tab">Tab 2</a>
             </div>
+            <ui-view></ui-view>
         </div>
 
         <script src="lib/jquery-3.6.1.min.js"></script>
         <script src="lib/angular.min.js"></script>
+        <script src="lib/angular-ui-router.min.js"></script>
 
         <script src="src/shopping-list/shopping-list-module.js"></script>
         <script src="src/spinner/spinner.module.js"></script>

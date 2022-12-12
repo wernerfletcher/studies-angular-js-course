@@ -13,7 +13,24 @@
     margin-left: 40px;
 }
 
-img {
+.spinner {
     width: 20px;
     height: 20px;
+}
+
+.tab {
+    margin-right: 10px;
+}
+
+.tab1-content {
+    margin-top: 20px;
+}
+
+.tab2-content {
+    margin-top: 20px;
+    width: 100px;
+}
+
+.active-tab {
+    font-weight: bold;
 }

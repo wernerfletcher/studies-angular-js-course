@@ -1,0 +1,8 @@
+<div class="tab1-content" ng-controller="ShoppingListController as list">
+    <input type="text" ng-model="list.itemName" placeholder="Item name">
+    <input type="text" ng-model="list.itemQuantity" placeholder="Quantity">
+    <button ng-click="list.addItem(list.itemName, list.itemQuantity);">Add item</button>
+
+    <shopping-list items="list.items" remove-item="list.removeItem(index);"></shopping-list>
+    <spinner></spinner>
+</div>
