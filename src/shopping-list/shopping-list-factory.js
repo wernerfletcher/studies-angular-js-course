@@ -4,22 +4,20 @@
     angular.module('ShoppingListApp')
         .factory('ShoppingListFactory', ShoppingListFactory);
 
-    function ShoppingListFactory() {
-        let factory = function (maxItems) {
-            return new ShoppingListService(maxItems);
+    ShoppingListFactory.$inject = ['$q', '$timeout'];
+    function ShoppingListFactory($q, $timeout) {
+        return function () {
+            return new ShoppingListService($q, $timeout);
         }
-        return factory;
-    };
+    }
 
-    function ShoppingListService(maxItems) {
+    function ShoppingListService($q, $timeout) {
         let service = this;
 
-        let items = [];
+        let items = [{ name: 'dummy item', quantity: '-1' }];
 
         service.add = function (name, quantity) {
-            if ((maxItems === undefined) || (maxItems !== undefined && items.length < maxItems)) {
-                items.push({ name: name, quantity: quantity });
-            }
+            items.push({ name: name, quantity: quantity });
         };
 
         service.remove = function (idx) {
@@ -27,7 +25,12 @@
         };
 
         service.getItems = function () {
-            return items;
+            let deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve(items);
+            }, 2000);
+
+            return deferred.promise;
         };
     }
 })();

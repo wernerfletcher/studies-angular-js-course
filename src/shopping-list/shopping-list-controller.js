@@ -4,14 +4,14 @@
     angular.module('ShoppingListApp')
         .controller('ShoppingListController', ShoppingListController);
 
-    ShoppingListController.$inject = ['ShoppingListFactory'];
-    function ShoppingListController(ShoppingListFactory) {
+    ShoppingListController.$inject = ['ShoppingListFactory', 'items'];
+    function ShoppingListController(ShoppingListFactory, items) {
         let list = this;
-        let shoppingListService = new ShoppingListFactory(5);
+        let shoppingListService = new ShoppingListFactory();
 
         list.itemName = '';
         list.itemQuantity = '';
-        list.items = shoppingListService.getItems();
+        list.items = items;
 
         list.addItem = function (name, quantity) {
             shoppingListService.add(name, quantity);

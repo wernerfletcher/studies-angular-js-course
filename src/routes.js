@@ -13,7 +13,13 @@
             .state('tab1', {
                 url: '/tab1',
                 templateUrl: 'src/shopping-list/tab1.html',
-                controller: 'ShoppingListController as list'
+                controller: 'ShoppingListController as list',
+                resolve: {
+                    items: ['ShoppingListFactory', function (ShoppingListFactory) {
+                        let shoppingListService = new ShoppingListFactory(5);
+                        return shoppingListService.getItems();
+                    }]
+                }
             })
             .state('tab2', {
                 url: '/tab2',
