@@ -28,7 +28,7 @@
             let deferred = $q.defer();
             $timeout(function () {
                 deferred.resolve(items);
-            }, 2000);
+            }, 1500);
 
             return deferred.promise;
         };
