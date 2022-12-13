@@ -4,10 +4,10 @@
     angular.module('ShoppingListApp')
         .controller('ItemDetailController', ItemDetailController);
 
-    ItemDetailController.$inject = ['selectedItem'];
-    function ItemDetailController(selectedItem) {
+    ItemDetailController.$inject = ['$stateParams', 'items'];
+    function ItemDetailController($stateParams, items) {
         let itemDetail = this;
 
-        itemDetail.description = selectedItem.description;
+        itemDetail.description = items[$stateParams.itemId].description;
     }
 })();

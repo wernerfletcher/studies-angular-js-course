@@ -1,6 +1,6 @@
 <div>
     <ol>
-        <li class="list-item" ng-repeat="item in $ctrl.items" ui-sref="detail({itemId: $index})">{{item.quantity}} of {{item.name}}
+        <li class="list-item" ng-repeat="item in $ctrl.items" ui-sref="tab1.detail({itemId: $index})">{{item.quantity}} of {{item.name}}
             <button ng-click="$ctrl.remove($index)">X</button>
         </li>
     </ol>

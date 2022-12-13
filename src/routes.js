@@ -21,18 +21,12 @@
                     }]
                 }
             })
-            .state('detail', {
-                url: '/detail/{itemId}',
+            .state('tab1.detail', {
+                //url: '/detail/{itemId}',
                 templateUrl: 'src/shopping-list/detail.html',
                 controller: 'ItemDetailController as itemDetail',
-                resolve: {
-                    selectedItem: ['$stateParams', 'ShoppingListFactory', function ($stateParams, ShoppingListFactory) {
-                        let shoppingListService = new ShoppingListFactory();
-                        return shoppingListService.getItems()
-                            .then(function (items) {
-                                return items[$stateParams.itemId];
-                            });
-                    }]
+                params: {
+                    itemId: null
                 }
             })
             .state('tab2', {

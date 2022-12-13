@@ -4,5 +4,6 @@
     <button ng-click="list.addItem(list.itemName, list.itemQuantity);">Add item</button>
 
     <shopping-list items="list.items" remove-item="list.removeItem(index);"></shopping-list>
+    <ui-view></ui-view>
     <spinner></spinner>
 </div>
